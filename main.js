@@ -17,24 +17,28 @@ form.addEventListener('submit',
     function(e){
         e.preventDefault(); /* Prevent the default submit behavior of the <form> */
 
-        let isInputFieldAFilled = isNumberFilled(inputFieldA); /* Verify if the <input> of number A is filled */
-        let isInputFieldBFilled = isNumberFilled(inputFieldB); /* Verify if the <input> of number B is filled */
+        const isInputFieldAFilled = isNumberFilled(inputFieldA); /* Verify if the <input> of number A is filled */
+        const isInputFieldBFilled = isNumberFilled(inputFieldB); /* Verify if the <input> of number B is filled */
 
         !isInputFieldAFilled ? numberANotFilled.style.display = "block" : numberANotFilled.style.display = "none"; /* Display or hide the <p> element with error message, depending if input A is filled or not */
 
         !isInputFieldBFilled ? numberBNotFilled.style.display = "block" : numberBNotFilled.style.display = "none"; /* Display or hide the <p> element with error message, depending if input B is filled or not */
-        
-        if (isInputFieldAFilled & isInputFieldBFilled){ /* If both inputs are filled */
-            const successMessage = `Verificação bem sucedida o "Número B"=${inputFieldB.value} é maior que o "Número A"=${inputFieldA.value}!`; /* Define the success return message */
-            const failMessage = `Verificação mal sucedida o "Número B"=${inputFieldB.value} é menor ou igual ao "Número A"=${inputFieldA.value}!`; /* Define the failt return message */
 
-            if (inputFieldA.value >= inputFieldB.value){ /* If number A is bigger or equal to number B, the verification fail */
+        if (isInputFieldAFilled && isInputFieldBFilled){ /* If both inputs are filled */
+
+            /* Parse the value from string to int, so the comparison works correctly */
+            const valueInputA = parseInt(inputFieldA.value); 
+            const valueInputB = parseInt(inputFieldB.value);
+
+            const successMessage = `Verificação bem sucedida o "Número B"=${valueInputB} é maior que o "Número A"=${valueInputA}`; /* Define the success return message */
+            const failMessage = `Verificação mal sucedida o "Número B"=${valueInputB} é menor ou igual ao "Número A"=${valueInputA}`; /* Define the failt return message */
+
+            if (valueInputA >= valueInputB){ /* If number A is bigger or equal to number B, the verification fail */
                 returnMessage.classList.remove('verificationSucceed'); /* Remove the success styling class from the return message */
                 returnMessage.classList.add('verificationFailed'); /* Add the failed styling class to the return message */
 
                 returnMessage.innerHTML = failMessage; /* Set the text to the fail message */
-            }
-            else {
+            }else {
                 returnMessage.classList.remove('verificationFailed'); /* Remove the failed styling class from the return message */
                 returnMessage.classList.add('verificationSucceed'); /* Add the success styling class to the return message */
 
